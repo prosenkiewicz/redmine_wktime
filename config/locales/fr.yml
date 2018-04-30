@@ -854,3 +854,14 @@ fr:
   label_select_date_text: Please select the date
 
   label_report_type: Rapport Type
+
+  label_call_contact: Call
+  label_add_to_queue: Add to queue
+  label_add_selected_to_queue: Add selected to queue
+  label_add_to_conference: Add to conference
+  label_add_selected_to_conference: Add selected to conference
+  label_no_number: No Number
+
+  label_choose_queue: Choose Queue
+  label_selected_contacts_numbers_undefined: The following selected contacts do not have a phone number defined for the selected type of numbers.
+  label_numbers_undefined: Contacts have undefined numbers

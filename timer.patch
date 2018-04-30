@@ -1,0 +1,88 @@
+diff --git a/app/views/wktime/_attendance_widget.html.erb b/app/views/wktime/_attendance_widget.html.erb
+index 3cb8fb8..3182872 100644
+--- a/app/views/wktime/_attendance_widget.html.erb
++++ b/app/views/wktime/_attendance_widget.html.erb
+@@ -30,18 +30,17 @@
+ 	<% host_with_subdir = wktime_helper.getHostAndDir(request) %>
+ 	<%=h hidden_field_tag('clockinout_url',  "#{url_for(:controller => 'wkbase', :action => 'updateClockInOut', :host => host_with_subdir, :only_path => true)}" )  %>
+ 	<% if User.current.logged? && wktime_helper.checkViewPermission %>
+-		<label id="appendlabel" style="float: right; position: relative; z-index: 9999; text-shadow: -1px -1px 0 #628DB6, 1px -1px 0 #628DB6, -1px 1px 0 #628DB6, 1px 1px 0 #628DB6;"><br/><%= l(:label_total_hours) %><br/>
+-		   &nbsp;<span id="totalhours" timer-on="<%= hideStart %>" totalhours="<%= totalhours %>"><%= totalhours1 %></span></label>  
++		<label id="appendlabel" style="float: right; display: inline; position: relative; z-index: 9999; text-shadow: -1px -1px 0 #628DB6, 1px -1px 0 #628DB6, -1px 1px 0 #628DB6, 1px 1px 0 #628DB6;"><br/><%= l(:label_total_hours) %><br/>
++		   &nbsp;<%= totalhours1 %></label>  
+ 			
+-		<div id="startdiv" style="float: right; position: relative; z-index: 9999;"  >
++		<div id="startdiv" style="float: right; display: inline; position: relative; z-index: 9999;"  >
+ 		<% strt_image_tg = image_tag("widgetclockin.png", :id => 'clockin' , :plugin => "redmine_wktime", :title => l(:label_clock_in), :style => hideStart ? "display:none;" : "display:block;" ) %>
+ 		<%= link_to strt_image_tg, "javascript:signAttendance('start');", {:id => "clock_start"}  %>		
+ 		</div>
+ 		
+-		<div id="enddiv" style="float: right; position: relative; z-index: 9999;" >
++		<div id="enddiv" style="float: right; display: inline; position: relative; z-index: 9999;" >
+ 		<% end_image_tg = image_tag("widgetclockout.png", :id => 'clockout', :plugin => "redmine_wktime", :title => l(:label_clock_out),:style => hideEnd ? "display:none;" : "display:block;" ) %>
+-		<%= link_to end_image_tg, "javascript:signAttendance('end');", {:id => "clock_end"}  %>
+-		<%= javascript_include_tag 'clock', :plugin => "redmine_wktime" %>
++		<%= link_to end_image_tg, "javascript:signAttendance('end');", {:id => "clock_end"}  %>		
+ 		</div>
+ 		
+ 		<div style="clear: both;"></div>
+diff --git a/assets/javascripts/clock.js b/assets/javascripts/clock.js
+deleted file mode 100644
+index d0cf6e8..0000000
+--- a/assets/javascripts/clock.js
++++ /dev/null
+@@ -1,54 +0,0 @@
+-$(document).ready(function(){
+-	let t;
+-	let msSinceClick;
+-	let timerOn = $('#totalhours').attr("timer-on");
+-	let totalhours = $('#totalhours').attr("totalhours")
+-	let totalTimeMs = Number(totalhours)*1000;
+-
+-	if (timerOn === 'true') {
+-		msSinceClick = new Date().getTime()
+-		clockIn();
+-	}
+-
+-	$('#clockin').click(function(){
+-		msSinceClick = new Date().getTime()
+-		clockIn();
+-	});
+-
+-	$('#clockout').click(function(){
+-		clearTimeout(t);
+-	})
+-
+-	function clockIn() {
+-
+-		let now = new Date();
+-		let nowInMs = now.getTime();
+-
+-		let currentTimeInMs = (nowInMs - msSinceClick) + totalTimeMs;
+-		let currentDate = milisToTimestamp(currentTimeInMs);
+-
+-		$('#totalhours').text(`${currentDate}`);
+-
+-	    t = setTimeout(clockIn, 1000);
+-	}
+-
+-	function validateTime(value) {
+-		if (value < 10) {
+-			value = "0" + value;
+-		}
+-		return value;
+-	}
+-
+-	function milisToTimestamp(milis) {
+-		let currentDate = new Date (milis);
+-		let h = currentDate.getUTCHours();
+-		let m = currentDate.getUTCMinutes();
+-		let s = currentDate.getUTCSeconds();
+-
+-		h = validateTime(h);
+-		m = validateTime(m);
+-		s = validateTime(s);
+-
+-		return `${h}:${m}:${s}`;
+-	}
+-});

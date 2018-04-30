@@ -1,0 +1,82 @@
+<ul>
+    <% if @menu.length == 1 %>        
+      <% @menu.each do |item| %>
+       <li class="folder icon-user">
+                <a href="#" class="submenu"><%= l(:label_call_contact) %></a>
+                <ul>
+                    <% if !item[:allNumbersUndefined] %>
+                        <% item[:numbers].each do |key, value| %>
+                            <% if value != nil && value.length > 0 %>
+                            
+                                <% toJsonKeyValue = [{key => value}]%>
+
+                                    <li class="queue-phone" url="<%= wkcrmcontact_queue_modal_path %>" key="<%= key %>" value="<%= toJsonKeyValue.to_json %>"><%= "#{l("label_#{key}")}: #{value}" %></li>
+
+                            <% end %>
+                        <% end %>
+                    <% else %>
+                        <li><%= l(:label_no_number) %></li>
+
+                    <% end %>
+                </ul>
+            </li>
+            <li class="folder icon-user">
+                <a href="#" class="submenu"><%= l(:label_add_to_queue) %></a>
+                <ul>
+                    <% if !item[:allNumbersUndefined] %>
+                        <% item[:numbers].each do |key, value| %>
+
+                            <% if value != nil && value.length > 0 %>
+                            
+                                <% toJsonKeyValue = [{key => value}]%>
+                                    <li class="queue-phone" url="<%= wkcrmcontact_queue_modal_path %>" key="<%= key %>" value="<%= toJsonKeyValue.to_json %>"><%= "#{l("label_#{key}")}: #{value}" %></li>
+
+                            <% end %>
+                        <% end %>
+                    <% else %>
+                        <li><%= l(:label_no_number) %></li>
+
+                    <% end %>
+                </ul>
+            </li>
+            <li class="folder  icon-user">
+                <a href="#" class="submenu"><%= l(:label_add_to_conference) %></a>
+                <ul>
+                    <% if !item[:allNumbersUndefined] %>
+                        <% item[:numbers].each do |key, value| %>
+
+                            <% if value != nil && value.length > 0 %>
+                            
+                                <% toJsonKeyValue = [{key => value}]%>
+
+                                    <li class="queue-phone" url="<%= wkcrmcontact_queue_modal_path %>" key="<%= key %>" value="<%= toJsonKeyValue.to_json %>"><%= "#{l("label_#{key}")}: #{value}" %></li>
+
+                            <% end %>
+                            
+                        <% end %>
+                    <% else %>
+                        <li><%= l(:label_no_number) %></li>
+                    <% end %>
+                </ul>
+            </li>
+          <% end %>
+        <% end %>
+        <% if @menu.length > 1 %>
+                <li class="folder icon-group">
+                <a href="#" class="submenu"><%= l(:label_add_selected_to_queue) %></a>
+                <ul>
+                    <% @menu[0][:numbers].each do |key, value| %>
+                            <li class="queue-phone" url="<%= wkcrmcontact_queue_modal_path %>" key="<%= key %>" value="<%= @jsonMenu %>"><%= l("label_#{key}") %></li>
+                    <% end %>
+                </ul>
+                </li>
+                <li class="folder icon-group">
+                    <a href="#" class="submenu"><%= l(:label_add_selected_to_conference) %></a>
+                    <ul>
+                        <% @menu[0][:numbers].each do |key, value| %>
+                                <li class="queue-phone" url="<%= wkcrmcontact_queue_modal_path %>" key="<%= key %>" value="<%= @jsonMenu %>"><%= l("label_#{key}") %></a></li>
+                        <% end %>
+                    </ul>
+                </li>
+        <% end %>
+</ul>

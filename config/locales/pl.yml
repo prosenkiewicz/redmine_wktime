@@ -889,3 +889,14 @@ pl:
   label_select_date_text: Proszę wybrać datę
 
   label_report_type: Typ Raportu
+
+  label_call_contact: Zadzwoń
+  label_add_to_queue: Dodaj do kolejki
+  label_add_selected_to_queue: Dodaj zaznaczone do kolejki
+  label_add_to_conference: Dodaj do konferencji
+  label_add_selected_to_conference: Dodaj zaznaczone do konferencji
+  label_no_number: Brak numeru
+
+  label_choose_queue: Wybierz kolejkę
+  label_selected_contacts_numbers_undefined: Poniższe wybrane kontakty nie posiadają zdefiniowanego numeru telefonu dla wybranego typu numerów.
+  label_numbers_undefined: Kontakty nie mają zdefiniowanych numerów

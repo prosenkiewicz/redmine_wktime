@@ -1,0 +1,53 @@
+<form url="<%= @queueUrl %>">
+<% if @selectedNumbers.length > 0 %>
+
+	<div class="queues-modal-container">
+	<table class="list odd-even">
+	  <thead>
+	    <tr>
+	        <th class="queues-modal-title" colspan="2"><%= l(:label_choose_queue) %></th>
+	    </tr>
+	  </thead>
+	  <tbody>
+		  <% @availableQueues.each do |queue| -%>
+		  		<tr>
+					<td class="checkbox hide-when-print"><%= check_box_tag("#{queue["id"]}", @selectedNumbers.to_json, false, :id => queue["name"], class: "queue-checkbox") %></td>
+					<td class="lbl-txt-align"><label for="<%= queue["name"] %>"><%= queue["name"]  %></label></td>
+				</tr>
+		  <% end %>
+		  	<% if @contactsWithoutNumbers.length > 0 %>
+				<tr>
+					<td colspan="2"><div class="scrollable">
+						<h5><%= l(:label_selected_contacts_numbers_undefined) %></h5>
+					    <ul>
+					    	<% @contactsWithoutNumbers["name"].each do |name| %>
+					    		<li><%= name %></li>
+					    	<% end %>
+					    </ul>
+					</div></td>
+				</tr>
+			<% end %>
+	  </tbody>
+	</table>
+	<button class="queues-modal-button-send"><%= l(:button_submit) %></button>
+	<button class="queues-modal-button-cancel"><%= l(:button_cancel) %></button>
+	</div>
+<% else %>
+	<div class="queues-modal-container">
+	<table class="list">
+	  <thead>
+	    <tr>
+	        <th class="queues-modal-title" colspan="1"><%= l(:default_tracker_bug) %></th>
+	    </tr>
+	  </thead>
+	  <tbody>
+		<tr>
+			<td><div class="scrollable">
+				<h3 class="queues-modal-error-text"><%= l(:label_numbers_undefined) %></h3>
+			</td>
+		</tr>
+	  </tbody>
+	</table>
+	<button class="queues-modal-button-cancel"><%= l(:button_wk_approve) %></button>
+<% end %>
+</form>
