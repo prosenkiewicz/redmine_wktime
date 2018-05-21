@@ -35,13 +35,38 @@ include WkattendanceHelper
 		lastAttnEntries = findLastAttnEntry(true)
 		if !lastAttnEntries.blank?
 			@lastAttnEntry = lastAttnEntries[0]
-		end	
+		end
 		currentDate = (DateTime.parse params[:startdate])
+		clockState = true
 		entryTime  =  Time.parse("#{currentDate.to_date.to_s} #{currentDate.utc.to_time.to_s} ").localtime
-		@lastAttnEntry = saveAttendance(@lastAttnEntry, entryTime, nil, User.current.id, false)
+		endTime = nil
+
+		if params[:str] == 'false'
+			endTime = entryTime
+			clockState = false
+		end
+
+		@lastAttnEntry = saveAttendance(@lastAttnEntry, entryTime, endTime, User.current.id, clockState)
+
 		ret = 'done'
 		respond_to do |format|
-			format.text  { render :text => ret }
+			format.text  { render :text => params[:str] }
+		end
+	end
+
+	def checkClockState
+		lastAttnEntries = findLastAttnEntry(true)
+		if !lastAttnEntries.blank?
+			lastAttnEntry = lastAttnEntries[0]
+		end
+		if lastAttnEntry.end_time.blank?
+			respond_to do |format|
+				format.text  { render :text => "clockOn" }
+			end
+		else
+			respond_to do |format|
+				format.text  { render :text => "clockOff" }
+			end
 		end
 	end
 	

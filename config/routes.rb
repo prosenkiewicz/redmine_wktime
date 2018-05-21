@@ -232,6 +232,8 @@ get 'wkattendance/getGroupMembers', :to => 'wkattendance#getGroupMembers'
 	# get 'wkreport/balance_sheet', :to => 'wkreport#balance_sheet'
 	
 	get 'wkbase/updateClockInOut', :to => 'wkbase#updateClockInOut'
+
+	get 'wkbase/checkClockState', :to => 'wkbase#checkClockState'
 	
 	# For CRM
 	
@@ -549,7 +551,7 @@ get 'wkattendance/getGroupMembers', :to => 'wkattendance#getGroupMembers'
 	
 	get 'wkpublicholiday/index', :to => 'wkpublicholiday#index'
 	
-	post 'wkpublicholiday/update', :to => 'wkpublicholiday#update'shift#shiftRoleUpdate'
+	post 'wkpublicholiday/update', :to => 'wkpublicholiday#update'
 	
 	get 'wkscheduling/edit', :to => 'wkscheduling#edit'
 	

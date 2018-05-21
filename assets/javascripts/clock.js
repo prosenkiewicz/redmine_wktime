@@ -1,17 +1,20 @@
 $(document).ready(function(){
 	let t;
 	let msSinceClick;
+	let timerState = "off";
 	let timerOn = $('#totalhours').attr("timer-on");
 	let totalhours = $('#totalhours').attr("totalhours")
 	let totalTimeMs = Number(totalhours)*1000;
+	checkClockState;
+	let clockState = setInterval(checkClockState, 5000)
 
 	if (timerOn === 'true') {
-		msSinceClick = new Date().getTime()
+		msSinceClick = new Date().getTime();
 		clockIn();
 	}
 
 	$('#clockin').click(function(){
-		msSinceClick = new Date().getTime()
+		msSinceClick = new Date().getTime();
 		clockIn();
 	});
 
@@ -20,7 +23,6 @@ $(document).ready(function(){
 	})
 
 	function clockIn() {
-
 		let now = new Date();
 		let nowInMs = now.getTime();
 
@@ -28,8 +30,13 @@ $(document).ready(function(){
 		let currentDate = milisToTimestamp(currentTimeInMs);
 
 		$('#totalhours').text(`${currentDate}`);
-
+		timerState = "on";
 	    t = setTimeout(clockIn, 1000);
+	    if (document.getElementById('clockin').style.display === "block") {
+			console.log("displayed block");
+			timerState = "off";
+			clearTimeout(t);
+		}
 	}
 
 	function validateTime(value) {
@@ -50,5 +57,16 @@ $(document).ready(function(){
 		s = validateTime(s);
 
 		return `${h}:${m}:${s}`;
+	}
+
+	function checkClockState(){
+		console.log(document.getElementById('clockout').style.display);
+		console.log(timerState);
+		if (document.getElementById('clockout').style.display === "block" && timerState === "off") {
+			msSinceClick = new Date().getTime();
+			console.log("turned on");
+			clockIn();
+		}
+
 	}
 });

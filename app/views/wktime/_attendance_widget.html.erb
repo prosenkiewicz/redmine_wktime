@@ -41,9 +41,9 @@
 		<div id="enddiv" style="float: right; position: relative; z-index: 9999;" >
 		<% end_image_tg = image_tag("widgetclockout.png", :id => 'clockout', :plugin => "redmine_wktime", :title => l(:label_clock_out),:style => hideEnd ? "display:none;" : "display:block;" ) %>
 		<%= link_to end_image_tg, "javascript:signAttendance('end');", {:id => "clock_end"}  %>
-		<%= javascript_include_tag 'clock', :plugin => "redmine_wktime" %>
 		</div>
-		
+		<span id="kek"><%= @lastAttnEntry.inspect %></span>
+		<%= javascript_include_tag 'clock', :plugin => "redmine_wktime" %>
 		<div style="clear: both;"></div>
 	<% end %>
 	<% end %>	
