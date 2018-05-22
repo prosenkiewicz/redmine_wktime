@@ -236,6 +236,10 @@ get 'wkattendance/getGroupMembers', :to => 'wkattendance#getGroupMembers'
 	get 'wkbase/checkClockState', :to => 'wkbase#checkClockState'
 	
 	# For CRM
+
+	get 'wkcrmcontact_context_menu', :to => 'wkcontext_menus#wkcrmcontact'
+
+	post 'wkcrmcontact_queue_modal', :to => 'wkcontext_menus#wkcrmqueue'
 	
 	get 'wkcrm/index', :to => 'wkcrm#index'
 	

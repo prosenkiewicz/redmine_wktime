@@ -4,7 +4,14 @@ var hasTrackerError = false;
 var spentTypeVal;
 
 $(document).ready(function(){
-	setInterval(checkClockState, 10000);
+	clockStateInterval = $('#clockstate_check_interval').val()
+	if (clockStateInterval.match(/^\d+$/) !== null) {
+		clockStateInterval = Number(clockStateInterval.match(/^\d+$/)[0]) * 1000;
+	} else {
+		clockStateInterval = 60000
+	}
+	console.log(clockStateInterval);
+	setInterval(checkClockState, clockStateInterval);
 	var txtEntryDate;
 	var txtissuetracker;
 	var timeWarnMsg = document.getElementById('label_time_warn');
@@ -234,8 +241,9 @@ function signAttendance(str)
 
 function checkClockState()
 {
+	var clockStateUrl = $("#clockstate_url").val();
 	$.ajax({	
-	url: 'wkbase/checkClockState',//'/updateClockInOut',
+	url: clockStateUrl,
 	type: 'get',
 	success: function(data)
 	{

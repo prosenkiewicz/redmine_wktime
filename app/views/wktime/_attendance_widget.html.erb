@@ -29,6 +29,8 @@
 	<% totalhours1 = Time.at(totalhours).utc.strftime("%H:%M:%S") %>
 	<% host_with_subdir = wktime_helper.getHostAndDir(request) %>
 	<%=h hidden_field_tag('clockinout_url',  "#{url_for(:controller => 'wkbase', :action => 'updateClockInOut', :host => host_with_subdir, :only_path => true)}" )  %>
+	<%=h hidden_field_tag('clockstate_url',  "#{url_for(:controller => 'wkbase', :action => 'checkClockState', :host => host_with_subdir, :only_path => true)}" )  %>
+	<%=h hidden_field_tag('clockstate_check_interval',  "#{Setting.check_clock_state_interval}" )  %>
 	<% if User.current.logged? && wktime_helper.checkViewPermission %>
 		<label id="appendlabel" style="float: right; position: relative; z-index: 9999; text-shadow: -1px -1px 0 #628DB6, 1px -1px 0 #628DB6, -1px 1px 0 #628DB6, 1px 1px 0 #628DB6;"><br/><%= l(:label_total_hours) %><br/>
 		   &nbsp;<span id="totalhours" timer-on="<%= hideStart %>" totalhours="<%= totalhours %>"><%= totalhours1 %></span></label>  
@@ -42,7 +44,6 @@
 		<% end_image_tg = image_tag("widgetclockout.png", :id => 'clockout', :plugin => "redmine_wktime", :title => l(:label_clock_out),:style => hideEnd ? "display:none;" : "display:block;" ) %>
 		<%= link_to end_image_tg, "javascript:signAttendance('end');", {:id => "clock_end"}  %>
 		</div>
-		<span id="kek"><%= @lastAttnEntry.inspect %></span>
 		<%= javascript_include_tag 'clock', :plugin => "redmine_wktime" %>
 		<div style="clear: both;"></div>
 	<% end %>

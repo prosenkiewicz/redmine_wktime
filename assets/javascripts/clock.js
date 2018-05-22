@@ -33,7 +33,6 @@ $(document).ready(function(){
 		timerState = "on";
 	    t = setTimeout(clockIn, 1000);
 	    if (document.getElementById('clockin').style.display === "block") {
-			console.log("displayed block");
 			timerState = "off";
 			clearTimeout(t);
 		}
@@ -60,11 +59,8 @@ $(document).ready(function(){
 	}
 
 	function checkClockState(){
-		console.log(document.getElementById('clockout').style.display);
-		console.log(timerState);
 		if (document.getElementById('clockout').style.display === "block" && timerState === "off") {
 			msSinceClick = new Date().getTime();
-			console.log("turned on");
 			clockIn();
 		}
 
